@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.scss";
+import {Routes, Route, Link } from "react-router-dom";
+import ErrorPage from "./Pages/Error";
+import Login from "./Pages/Login"
+import RequireAuth from "./Pages/RequireAuth";
+import PersistLogin from './components/PersistLogin';
+import Dashboard from "./Pages/Dashboard";
+import RegisterPage from "./Pages/Register";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    
+      <><nav>
+      <div className="Navbar">
+        <Link to="/">Login</Link>
+        <Link to="/sign-up">Registrieren</Link>
+        <Link to="/dashboard">Dashboard</Link>
+        
+      </div>
+    </nav><Routes>
+        <Route path="/" element={Login()} />
+        <Route path="/sign-up" element={RegisterPage()} />
+      <Route element={<PersistLogin />}>
+        <Route element={<RequireAuth />}>
+          <Route path="/dashboard" element={Dashboard()} />
+        </Route>
+      </Route>
+        <Route path="*" element={ErrorPage()} />
+
+      </Routes></>
+
   );
 }
 
